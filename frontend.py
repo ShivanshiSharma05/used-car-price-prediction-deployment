@@ -83,7 +83,8 @@ st.write(response.text)
 
 if response.status_code == 200:
     result = response.json()
-    st.success(f"💰 Predicted Price: ₹ {result['predicted_price']} Lakhs")
+    price = round(result['predicted_price'])
+    st.success(f"💰 Predicted Price: ₹ {price:,}")
 else:
     st.error("Backend error")
 
