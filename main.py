@@ -36,3 +36,8 @@ def predict(data: CarInput):
     return {
         "predicted_price": round(float(prediction[0]), 2)
     }
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=10000)

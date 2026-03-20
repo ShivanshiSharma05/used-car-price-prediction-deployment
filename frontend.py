@@ -75,7 +75,7 @@ if st.button("Predict Price"):
     }
 
     response = requests.post(
-    "http://127.0.0.1:8000/predict",
+    "https://used-car-price-backend.onrender.com/predict",
     json=data
 )
 
