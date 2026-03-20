@@ -6,31 +6,62 @@ from sklearn.ensemble import RandomForestRegressor
 # Load dataset
 df = pd.read_csv("car data.csv")
 
-# 1. Clean column names (removes hidden spaces)
-df.columns = df.columns.str.strip()
+# Drop name column
+df.drop("name", axis=1, inplace=True)
 
-# 2. Remove car name column 
-cols_to_drop = ['Name', 'Car_Name']
-df.drop(columns=[c for c in cols_to_drop if c in df.columns], inplace=True)
+# Encode fuel_type
+df["fuel_type"] = df["fuel_type"].map({
+    "CNG": 0,
+    "Diesel": 1,
+    "Petrol": 2,
+    "LPG": 3,
+    "Electric": 4
+})
 
-# 3. Encode ALL categorical columns automatically
-df = pd.get_dummies(df, drop_first=True)
+# Encode seller_type
+df["seller_type"] = df["seller_type"].map({
+    "Dealer": 0,
+    "Individual": 1,
+    "Trustmark Dealer": 2
+})
 
-# 4. Features and target
-X = df.drop("Selling_Price", axis=1)
-y = df["Selling_Price"]
+# Encode transmission
+df["transmission"] = df["transmission"].map({
+    "Automatic": 0,
+    "Manual": 1
+})
 
-# Train-test split
+# Encode owner
+df["owner"] = df["owner"].map({
+    "First Owner": 0,
+    "Second Owner": 1,
+    "Third Owner": 2,
+    "Fourth & Above Owner": 3,
+    "Test Drive Car": 4
+})
+
+# Remove missing values
+df.dropna(inplace=True)
+
+# Features and target
+X = df.drop("selling_price", axis=1)
+y = df["selling_price"]
+
+# Split
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-# 5. Model
-model = RandomForestRegressor(n_estimators=100)
+# Model
+model = RandomForestRegressor(
+    n_estimators=100,
+    random_state=42
+)
+
+# Train
 model.fit(X_train, y_train)
 
 # Save model
-with open("model.pkl", "wb") as f:
-    pickle.dump(model, f)
+pickle.dump(model, open("model.pkl", "wb"))
 
-print("Model trained and saved as model.pkl successfully!")
+print("✅ Model trained successfully")
