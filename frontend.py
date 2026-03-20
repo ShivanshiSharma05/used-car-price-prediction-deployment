@@ -38,7 +38,7 @@ if st.button("Predict Selling Price"):
 
     try:
         # Replace with your actual backend URL
-        url = "YOUR_REAL_BACKEND_URL/predict"
+        url = "https://used-car-backend.onrender.com/predict"
 
         response = requests.post(url, json=payload, timeout=60)
 
