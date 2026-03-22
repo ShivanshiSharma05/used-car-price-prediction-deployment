@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CarPriceAI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">🚗 CarPriceAI</div>
+    <div class="menu">
+        <a href="#">Predict</a>
+        <a href="#">Compare</a>
+        <a href="#">Trends</a>
+        <a href="#">History</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="left-panel">
+        <div class="badge">AI-POWERED • INDIAN MARKET • LIVE</div>
+        <h1>Know your car's <span>true worth</span></h1>
+        <p>Instant resale price prediction trained on real Indian listings using ML model.</p>
+    </div>
+
+    <div class="right-panel">
+
+        <form action="/predict" method="post">
+
+            <input type="number" name="year" placeholder="Year" required>
+            <input type="number" step="0.1" name="present_price" placeholder="Present Price" required>
+            <input type="number" name="kms_driven" placeholder="KM Driven" required>
+
+            <select name="fuel_type">
+                <option>Petrol</option>
+                <option>Diesel</option>
+                <option>CNG</option>
+            </select>
+
+            <select name="seller_type">
+                <option>Dealer</option>
+                <option>Individual</option>
+            </select>
+
+            <select name="transmission">
+                <option>Manual</option>
+                <option>Automatic</option>
+            </select>
+
+            <input type="number" name="owner" placeholder="Owner" required>
+
+            <button type="submit">Predict Resale Price →</button>
+
+        </form>
+
+        {% if prediction %}
+        <div class="result">
+            Estimated Price: ₹ {{ prediction }} Lakhs
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
